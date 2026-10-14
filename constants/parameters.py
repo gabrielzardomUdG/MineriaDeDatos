@@ -1,0 +1,6 @@
+IRIS_CSV_LOCAL_PATH : str = "datasets/iris.csv"
+IRIS_CSV_SEPAL_LENGTH : str = "sepal.length"
+IRIS_CSV_SEPAL_WIDTH: str = "sepal.width"
+IRIS_CSV_PETAL_LENGTH : str = "petal.length"
+IRIS_CSV_PETAL_WIDTH : str = "petal.width"
+IRIS_CSV_VARIETY : str = "variety"
