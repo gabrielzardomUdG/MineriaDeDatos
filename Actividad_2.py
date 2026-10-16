@@ -64,53 +64,40 @@ def scatter_plots(raw_data : pd.DataFrame) -> None :
     plt.show()
     return
 
-def histogram(raw_data : pd.DataFrame) -> None :
+def histogram(raw_data: pd.DataFrame) -> None:
 
-    #If you comment xlabel and ylabel it puts the defaults names of the columns.
+    columns = [
+        (proconst.IRIS_CSV_SEPAL_LENGTH, "Sépalo - Largo", "Sépalo Largo (cm)"),
+        (proconst.IRIS_CSV_SEPAL_WIDTH, "Sépalo - Ancho", "Sépalo Ancho (cm)"),
+        (proconst.IRIS_CSV_PETAL_LENGTH, "Pétalo - Largo", "Pétalo Largo (cm)"),
+        (proconst.IRIS_CSV_PETAL_WIDTH, "Pétalo - Ancho", "Pétalo Ancho (cm)")
+    ]
 
-    raw_data.plot.hist(
-        x = proconst.IRIS_CSV_SEPAL_LENGTH,
-        y = proconst.IRIS_CSV_SEPAL_WIDTH,
-        title="Sépalo - Largo vs Ancho",
-        xlabel="Sépalo Largo (cm)",
-        ylabel="Sépalo Ancho (cm)"
-    )
-    plt.show()
+    for column, title, xlabel in columns:
 
-    raw_data.plot.hist(
-        x = proconst.IRIS_CSV_PETAL_LENGTH,
-        y = proconst.IRIS_CSV_PETAL_WIDTH,
-        title="Pétalo - Largo vs Ancho",
-        xlabel = "Pétalo Largo (cm)",
-        ylabel = "Pétalo Ancho (cm)"
-    )
+        fig, ax = plt.subplots()
+
+        data = raw_data[column].dropna()
+
+        data.plot.hist(ax=ax, bins=15, alpha=0.7)
+
+        mean = data.mean()
+        median = data.median()
+
+        ax.axvline(mean, color="red", linestyle="--",
+                   label=f"Media: {mean:.2f}")
+
+        ax.axvline(median, color="green", linestyle="-.",
+                   label=f"Mediana: {median:.2f}")
 
 
-    plt.show()
+        ax.set_title(title)
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel("Frecuencia")
+        ax.legend()
+        ax.grid(axis="y", alpha=0.3)
 
-    fig, ax = plt.subplots()
-
-    raw_data.plot.hist(
-        x=proconst.IRIS_CSV_SEPAL_LENGTH,
-        y=proconst.IRIS_CSV_SEPAL_WIDTH,
-        color="blue",
-        label="Sépalo",
-        ax=ax
-    )
-
-    raw_data.plot.hist(
-        x=proconst.IRIS_CSV_PETAL_LENGTH,
-        y=proconst.IRIS_CSV_PETAL_WIDTH,
-        color="red",
-        label="Pétalo",
-        ax=ax
-    )
-
-    ax.set_title("Iris : Sépalo vs Pétalo")
-    ax.set_xlabel("Largo")
-    ax.set_ylabel("Ancho")
-    ax.legend()
-    plt.show()
+        plt.show()
 
     return
 
